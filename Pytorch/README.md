@@ -9,6 +9,6 @@ If you want to build yourself docker image or get information about this image, 
 $ docker run --rm -it \
     --gpus all \
     --ipc=host \
-    -v $PWD/:/root/pytorch-notes \
+    -v $PWD/:/root/ML-Notes \
     kakalin/kimage:cuda11.1-torch1.8-devel
 ```
