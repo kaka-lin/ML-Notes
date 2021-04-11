@@ -8,6 +8,10 @@ from tqdm import tqdm
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using {} device".format(device))
 
+# Parameters
+NUM_EPOCHS = 10
+BATCH_SIZE = 8
+
 # Create a simple dataset
 x = torch.randn((1000, 3, 224, 224))
 y = torch.randint(0, 10, (1000,))
@@ -27,20 +31,26 @@ loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
 # Training
-NUM_EPOCHS = 10
 for epoch in range(NUM_EPOCHS):
     loop = tqdm(loader)
     for idx, (x, y) in enumerate(loop):
         x, y = x.to(device), y.to(device)
 
+        # Clear gradients
+        optimizer.zero_grad()
+
         # forward
         pred = model(x)
-        loss = loss_fn(pred, y)
+        loss = loss_fn(pred, y)  # calculate loss
 
         # backward
-        optimizer.zero_grad()
         loss.backward()
-        optimizer.step()  # gradient descent or adam step
+        optimizer.step()  # update parameters
+
+        # get the index of the max log-probability
+        pred = pred.max(1, keepdim=True)[1]
+        correct = pred.eq(y.view_as(pred)).sum().item()
+        accuracy = correct / BATCH_SIZE
 
         loop.set_description(f"Epoch [{epoch}/{NUM_EPOCHS}]")
-        loop.set_postfix(loss=torch.rand(1).item(), acc=torch.rand(1).item())
+        loop.set_postfix(loss=loss.item(), acc=accuracy)
