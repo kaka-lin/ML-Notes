@@ -34,13 +34,15 @@ loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
 for epoch in range(NUM_EPOCHS):
+    n_batches = len(loader)
     print('Epoch {}/{}'.format(epoch+1, NUM_EPOCHS))
     with click.progressbar(iterable=loader,
-                           show_pos=True, show_percent=True,
-                           fill_char='#', empty_char=' ',
-                           label='train', width=30,
-                           item_show_func=metrics_report_func) as bar:
-        for batch_idx, (x, y) in enumerate(bar):
+                           label='',
+                           show_percent=True, show_pos=True,
+                           item_show_func=metrics_report_func,
+                           fill_char='=', empty_char='.',
+                           width=36) as bar:
+        for idx, (x, y) in enumerate(bar):
             x, y = x.to(device), y.to(device)
 
             # Clear gradients
@@ -60,8 +62,8 @@ for epoch in range(NUM_EPOCHS):
             accuracy = correct / BATCH_SIZE
 
             bar.current_item = [loss, accuracy]
-            _error = loss
-            _accuracy = accuracy
+            final_loss = loss
+            final_accuracy = accuracy
 
-            bar.current_item = [_error, _accuracy]
-            bar.render_progress()
+        bar.current_item = [final_loss, final_accuracy]
+        bar.render_progress()
