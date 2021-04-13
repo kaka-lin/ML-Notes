@@ -52,5 +52,5 @@ for epoch in range(NUM_EPOCHS):
         correct = pred.eq(y.view_as(pred)).sum().item()
         accuracy = correct / BATCH_SIZE
 
-        loop.set_description(f"Epoch [{epoch}/{NUM_EPOCHS}]")
+        loop.set_description(f"Epoch [{epoch+1}/{NUM_EPOCHS}]")
         loop.set_postfix(loss=loss.item(), acc=accuracy)
