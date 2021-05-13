@@ -1,0 +1,1 @@
+# OpenVINO&trade; Learning Notes
