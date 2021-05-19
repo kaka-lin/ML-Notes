@@ -1,0 +1,7 @@
+grpcio==1.36.1
+grpcio-tools==1.36.1
+numpy
+opencv-python
+protobuf==3.15.6
+tensorflow==2.*
+tensorflow-serving-api==2.*
