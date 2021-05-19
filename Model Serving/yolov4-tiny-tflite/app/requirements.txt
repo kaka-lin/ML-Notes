@@ -1,0 +1,7 @@
+future==0.18.2
+easydict
+matplotlib
+flask
+pillow
+gunicorn
+tensorflow==2.3.0
