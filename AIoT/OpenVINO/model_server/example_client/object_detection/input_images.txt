@@ -1,1 +1,2 @@
 images/dog.jpg
+images/cat.jpg
