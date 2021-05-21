@@ -1,0 +1,32 @@
+version: "3"
+services:
+  ovms:
+    container_name: yolov3-ovms
+    image: openvino/model_server:latest
+    restart: unless-stopped
+    volumes:
+      - ./model:/models/yolov3
+    ports:
+      - "9000:9000"
+    entrypoint: ""
+    command:
+      # Hacky script for quick demonstration purpose
+      - bash
+      - -c
+      - |
+        /ovms/bin/ovms \
+          --model_path /models/yolov3 \
+          --model_name yolov3 \
+          --port 9000
+  app:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    image: yolov3-ovms-app
+    restart: unless-stopped
+    environment:
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "ovms"
