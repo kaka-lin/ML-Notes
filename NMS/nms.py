@@ -21,7 +21,10 @@ def py_cpu_nms(boxes, scores, max_boxes=100, iou_thresh=0.5):
     y2 = boxes[:, 3]
 
     # The area of every box
-    areas = (x2 - x1) * (y2 - y1)
+    # NOTE:
+    #   左上角和右下角像素點重合，此時面積應是1而不是0
+    #   所以計算時要加一
+    areas = (x2 - x1 + 1) * (y2 - y1 + 1)
     order = scores.argsort()[::-1]
 
     keep = []
