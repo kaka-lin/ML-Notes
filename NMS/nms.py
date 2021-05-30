@@ -1,4 +1,5 @@
 import numpy as np
+import tensorflow as tf
 
 
 def py_cpu_nms(boxes, scores, max_boxes=100, iou_thresh=0.5):
@@ -44,3 +45,27 @@ def py_cpu_nms(boxes, scores, max_boxes=100, iou_thresh=0.5):
         order = order[inds + 1]
 
     return keep[:max_boxes]
+
+
+if __name__ == "__main__":
+    boxes = np.array([
+        [1, 2, 3, 4],
+        [1, 3, 3, 4],
+        [1, 3, 4, 4],
+        [1, 1, 4, 4],
+        [1, 1, 3, 4]
+    ])
+    print(f"Boxes: \n{boxes}")
+    scores = np.array([0.4, 0.5, 0.72, 0.9, 0.45])
+
+    selected_indices = py_cpu_nms(boxes, scores)
+    new_boxes = np.take(boxes, selected_indices, axis=0)
+    print(f"[py_cpu_nms] Selected indices: {selected_indices}")
+    print(f"[py] Selected boxes: \n{new_boxes}")
+
+    selected_indices = tf.image.non_max_suppression(
+        boxes, scores, 100, 0.5
+    )
+    new_boxes = tf.gather(boxes, selected_indices)
+    print(f"[tf_nms] Selected indices: {selected_indices}")
+    print(f"[tf] Selected boxes: \n{new_boxes}")
