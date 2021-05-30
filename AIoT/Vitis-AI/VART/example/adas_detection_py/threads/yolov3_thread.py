@@ -97,8 +97,8 @@ class YOLOv3Thread(threading.Thread):
             results,
             image_shape=(height, width),
             classes=3,
-            score_threshold=0.7,
-            iou_threshold=0.2)
+            score_threshold=0.5,
+            iou_threshold=0.7)
 
         # print("detection:")
         # for i in range(scores.shape[0]):

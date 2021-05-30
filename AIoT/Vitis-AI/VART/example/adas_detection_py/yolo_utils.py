@@ -5,10 +5,10 @@ from common import sigmoid
 # anchor boxes
 # (width, height)
 yolo_anchors = np.array([
-    (347, 98), (167, 83), (165, 158), (123, 100), (98, 174),
-    (105, 63), (76, 37), (74, 64), (66, 131), (40, 97),
-    (52, 42), (47, 23), (33, 29), (28, 68), (18, 46),
-    (24, 17), (14, 11), (13, 29), (8, 17), (5.5, 7)], np.float32) / [512, 256]
+    (123, 100), (167, 83), (98, 174), (165, 158), (347, 98),
+    (76, 37), (40, 97), (74, 64), (105, 63), (66, 131),
+    (18, 46), (33, 29), (47, 23), (28, 68), (52, 42),
+    (5.5, 7), (8, 17), (14, 11), (13, 29), (24, 17)], np.float32) / [512, 256]
 
 yolo_anchor_masks = np.array([[0, 1, 2, 3, 4],
                               [5, 6, 7, 8, 9],
@@ -69,7 +69,7 @@ def py_cpu_nms(boxes, scores, max_boxes=100, iou_thresh=0.5):
     y2 = boxes[:, 3]
 
     # The area of every box
-    areas = (x2 - x1) * (y2 - y1)
+    areas = (x2 - x1 + 1) * (y2 - y1 + 1)
     order = scores.argsort()[::-1]
 
     keep = []
@@ -96,8 +96,6 @@ def py_cpu_nms(boxes, scores, max_boxes=100, iou_thresh=0.5):
 
 ###########################################################################################
 # Post-processing
-
-
 def yolo_eval(yolo_outputs,
               image_shape=(416, 416),
               anchors=yolo_anchors,
