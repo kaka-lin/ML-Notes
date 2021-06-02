@@ -97,16 +97,25 @@ def py_cpu_nms(boxes, scores, max_boxes=100, iou_thresh=0.5):
 ###########################################################################################
 # Post-processing
 def yolo_eval(yolo_outputs,
-              image_shape=(416, 416),
-              anchors=yolo_anchors,
+              image_shape,
+              input_ndim=(416, 416),
               classes=80,
               max_boxes=100,
               score_threshold=0.5,
               iou_threshold=0.5):
+
+    num_layers = len(yolo_outputs)
+    anchors = yolo_anchors
+    anchor_mask = yolo_anchor_masks
+
     # Retrieve outputs of the YOLO model.
     for i in range(0, 4):
         _boxes, _box_scores = yolo_boxes_and_scores(
-            yolo_outputs[i], anchors[i*5:i*5+5], classes)
+            yolo_outputs[i],
+            image_shape,
+            input_ndim,
+            anchors[anchor_mask[i]],
+            classes)
 
         if i == 0:
             boxes, box_scores = _boxes, _box_scores
@@ -124,7 +133,7 @@ def yolo_eval(yolo_outputs,
     return scores, boxes, classes
 
 
-def yolo_boxes_and_scores(yolo_output, anchors=yolo_anchors, classes=80):
+def yolo_boxes_and_scores(yolo_output, image_shape, input_ndim, anchors, classes):
     """Process output layer"""
     # yolo_boxes: pred_box, box_confidence, box_class_probs
     pred_box, box_confidence, box_class_probs = yolo_boxes(
@@ -135,6 +144,35 @@ def yolo_boxes_and_scores(yolo_output, anchors=yolo_anchors, classes=80):
     # (x, y, w, h) -> (x1, y1, x2, y2)
     box_xy = pred_box[..., 0:2]
     box_wh = pred_box[..., 2:4]
+
+    ####################################################
+    # Correct boxes: coord transformation
+    #  now coord in relative padding_image (model input)
+    #  we need to transform it to relative resized image
+    image_shape = np.array(image_shape[0:2]) # (w, h)
+    input_ndim = np.array(input_ndim)
+
+    # offser:
+    #  we put the resized_image into padding_image,
+    #  so we change coord from relative padding_image
+    #  to relative resized_image
+    scale = min(input_ndim/image_shape)
+    new_shape = image_shape * scale # (w, h)
+    offset = (input_ndim - new_shape) / 2. / input_ndim
+
+    # scale:
+    #  now scale is relative padding_image
+    #  change it to relative resized_image
+    #    original_xy / input_ndim = box_xy
+    #    original_xy / new_shape = box_xy_res
+    #    -> original_xy = box_xy * input_ndim
+    #    -> box_xy_res = (box_xy * input_ndim) / new_shape
+    #    -> box_xy_res = box_xy * (input_ndim) / new_shape)
+    scale = input_ndim / new_shape
+    box_xy = (box_xy - offset) * scale
+    box_wh *= scale
+    ####################################################
+
     box_x1y1 = box_xy - (box_wh / 2.)
     box_x2y2 = box_xy + (box_wh / 2.)
     boxes = np.concatenate([box_x1y1, box_x2y2], axis=-1)

@@ -22,7 +22,7 @@ class YOLOv3Thread(threading.Thread):
         self.colors = generate_colors(self.class_names)
 
     def set_input_image(self, input_run, frame, size):
-        h, w = size
+        w, h = size
         img = preprocess_one_image_fn(frame, w, h)
         input_run[0, ...] = img.reshape((h, w, 3))
 
@@ -45,7 +45,7 @@ class YOLOv3Thread(threading.Thread):
         results = [result0, result1, result2, result3]
 
         # get input width, height for preprocess
-        height, width = input_ndim[1], input_ndim[2]
+        input_shape = (input_ndim[2], input_ndim[1])
 
         while True:
             self.lock_input.acquire()
@@ -62,7 +62,7 @@ class YOLOv3Thread(threading.Thread):
 
             # Init input image to input buffers
             img = data_from_deque['img']
-            self.set_input_image(input_data[0], img, (height, width))
+            self.set_input_image(input_data[0], img, input_shape)
 
             # invoke the running of DPU for yolov3
             """Benchmark DPU FPS performance over Vitis AI APIs `execute_async()` and `wait()`"""
@@ -70,14 +70,14 @@ class YOLOv3Thread(threading.Thread):
             job_id = self.runner.execute_async(input_data, results)
             self.runner.wait(job_id)
 
-            self.post_process(img, results, width, height)
+            self.post_process(img, results, input_shape)
 
             self.lock_output.acquire()
             self.deque_output.append(
                 {'idx': data_from_deque['idx'], 'img': img})
             self.lock_output.release()
 
-    def post_process(self, image, results, width, height):
+    def post_process(self, image, results, input_ndim):
         """Xilinx ADAS detction model: YOLOv3
 
         Name: yolov3_adas_pruned_0_9
@@ -93,9 +93,11 @@ class YOLOv3Thread(threading.Thread):
             }
         """
 
+        image_shape = (image.shape[1], image.shape[0]) # (w, h)
         scores, boxes, classes = yolo_eval(
             results,
-            image_shape=(height, width),
+            image_shape=image_shape,
+            input_ndim=input_ndim,
             classes=3,
             score_threshold=0.5,
             iou_threshold=0.7)
