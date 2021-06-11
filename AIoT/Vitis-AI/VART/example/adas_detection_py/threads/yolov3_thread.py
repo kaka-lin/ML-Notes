@@ -5,6 +5,7 @@ import numpy as np
 
 from common import preprocess_one_image_fn, draw_outputs, load_classes, generate_colors
 from yolo_utils import yolo_eval
+from priority_queue import PriorityQueue
 
 
 class YOLOv3Thread(threading.Thread):
@@ -62,6 +63,7 @@ class YOLOv3Thread(threading.Thread):
 
             # Init input image to input buffers
             img = data_from_deque['img']
+            idx = data_from_deque['idx']
             self.set_input_image(input_data[0], img, input_shape)
 
             # invoke the running of DPU for yolov3
@@ -73,8 +75,9 @@ class YOLOv3Thread(threading.Thread):
             self.post_process(img, results, input_shape)
 
             self.lock_output.acquire()
-            self.deque_output.append(
-                {'idx': data_from_deque['idx'], 'img': img})
+            img_info = PriorityQueue(idx, img)
+            self.deque_output.append(img_info)
+            self.deque_output.sort()
             self.lock_output.release()
 
     def post_process(self, image, results, input_ndim):

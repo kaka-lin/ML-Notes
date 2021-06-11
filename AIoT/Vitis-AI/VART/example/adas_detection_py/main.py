@@ -67,7 +67,7 @@ def main(args):
     # Create 6 threads and deque/lock for data flow
     threads = []
     deque_input = deque()
-    deque_output = deque()
+    deque_output = [] # we use our PriorityQueue object
     lock_input = threading.Lock()
     lock_output = threading.Lock()
 

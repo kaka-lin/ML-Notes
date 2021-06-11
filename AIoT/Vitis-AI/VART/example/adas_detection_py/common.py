@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument('--video_file', default="video/adas.webm", type=str)
     parser.add_argument(
         '--model_file', default="/usr/share/vitis_ai_library/models/yolov3_adas_pruned_0_9/yolov3_adas_pruned_0_9.xmodel", type=str)
-    parser.add_argument('--yolo_runner', default=1, type=int)
+    parser.add_argument('--yolo_runner', default=4, type=int)
 
     return parser
 

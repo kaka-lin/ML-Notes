@@ -29,7 +29,7 @@ class DisplayThread(threading.Thread):
 
                 cv2.imshow("Object Detection@Xilinx DPU", img)
                 self.output_img_idx += 1
-                self.deque_output.popleft()
+                self.deque_output.pop(0)
                 self.lock_output.release()
 
                 if cv2.waitKey(1) & 0xFF == ord('q'):
