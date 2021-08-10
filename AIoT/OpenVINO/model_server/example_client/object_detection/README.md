@@ -26,6 +26,17 @@ openvino/model_server:latest \
 --port 9000
 ```
 
+### Starting Model Server Container with a Configuration File
+
+```bash
+$ docker run --rm -d -p 9000:9000 \
+-v $(pwd)/model/:/models/yolov3 \
+-v $(pwd)/config.json:/models/config.json \
+openvino/model_server:latest \
+--config_path /models/config.json \
+--port 9000
+```
+
 ## 4. Run Inference
 
 ### 1. Install the dependencies
@@ -45,3 +56,5 @@ Then you would see the results in the output folder
 #### Example
 
 ![](images/dog_out.jpg)
+
+
