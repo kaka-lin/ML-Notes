@@ -26,6 +26,11 @@ class DisplayThread(threading.Thread):
                 time.sleep(10/1000000)
             elif self.output_img_idx == self.deque_output[0]['idx']:
                 img = self.deque_output[0]['img']
+                start_time = self.deque_output[0]['time']
+
+                fps = "Fps: {:.2f}".format(1 / (time.time() - start_time))
+                cv2.putText(img, fps, (10, 30), cv2.FONT_HERSHEY_SIMPLEX,
+                        1, (0, 255, 0), 2, cv2.LINE_AA)
 
                 cv2.imshow("Object Detection@Xilinx DPU", img)
                 self.output_img_idx += 1

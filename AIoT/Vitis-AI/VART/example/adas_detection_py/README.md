@@ -25,7 +25,7 @@ $ scp yolov3_adas_pruned_0_9-zcu102_zcu104-r1.3.0.tar.gz root@IP_OF_BOARD:~/
 ```bash
 $ mkdir -p /usr/share/vitis_ai_library/models
 
-$ tar yolov3_adas_pruned_0_9-zcu102_zcu104-r1.3.0.tar.gz
+$ tar xzvf yolov3_adas_pruned_0_9-zcu102_zcu104-r1.3.0.tar.gz
 $ cp yolov3_adas_pruned_0_9 /usr/share/vitis_ai_library/models -r
 ```
 

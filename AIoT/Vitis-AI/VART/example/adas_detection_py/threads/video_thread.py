@@ -15,8 +15,8 @@ class VideoThread(threading.Thread):
         self.running = False
 
         self.cap = cv2.VideoCapture(self.filename)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 256)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 512)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 512)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 256)
         if not self.cap.isOpened():
             print("Unable to open camera")
         else:
@@ -29,13 +29,19 @@ class VideoThread(threading.Thread):
         while self.running:
             time.sleep(0.02)
             if len(self.deque_input) < 30:
+                start_time = time.time()
                 ret, frame = self.cap.read()
 
                 if ret:
                     self.lock_input.acquire()
                     self.input_img_idx += 1
-                    self.deque_input.append({'idx': self.input_img_idx, 'img': frame})
+                    self.deque_input.append({
+                        'idx': self.input_img_idx,
+                        'img': frame,
+                        'time': start_time})
                     self.lock_input.release()
+                else:
+                    print("Video End !!!!")
             else:
                 time.sleep(10/1000000)
 

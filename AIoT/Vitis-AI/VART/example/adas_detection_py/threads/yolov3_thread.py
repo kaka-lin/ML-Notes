@@ -64,6 +64,7 @@ class YOLOv3Thread(threading.Thread):
             # Init input image to input buffers
             img = data_from_deque['img']
             idx = data_from_deque['idx']
+            start_time = data_from_deque['time']
             self.set_input_image(input_data[0], img, input_shape)
 
             # invoke the running of DPU for yolov3
@@ -75,7 +76,7 @@ class YOLOv3Thread(threading.Thread):
             self.post_process(img, results, input_shape)
 
             self.lock_output.acquire()
-            img_info = PriorityQueue(idx, img)
+            img_info = PriorityQueue(idx, img, start_time)
             self.deque_output.append(img_info)
             self.deque_output.sort()
             self.lock_output.release()
