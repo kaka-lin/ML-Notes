@@ -11,10 +11,10 @@ def softmax_2(x):
     """
     Softmax implementation with Tensorflow2
     Args:
-        - x [tensor]: 1xN tensors
+        x [tensor]: 1xN tensors
 
     Returns:
-        - soft_x: [tensor] softmax of x
+        soft_x: [tensor] softmax of x
     """
     exp = tf.exp(x)
     return exp / tf.reduce_sum(exp, 1, keepdims=True)
