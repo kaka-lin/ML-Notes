@@ -1,1 +1,3 @@
 # Softmax
+
+![](images/softmax.png)
