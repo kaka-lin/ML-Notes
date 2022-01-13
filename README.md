@@ -2,6 +2,10 @@
 
 ## Categories
 
+### Courses
+
+- [ML-Courses](https://github.com/kaka-lin/ML-Courses)
+
 ### Basics
 
 - [Algorithms](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms)
