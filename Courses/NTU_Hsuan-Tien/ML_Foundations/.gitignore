@@ -1,0 +1,16 @@
+*.pyc
+*.pyo
+*~
+
+venv/
+.venv/
+target/
+
+.vscode/
+
+.DS_Store
+._.DS_Store
+
+*.csv
+*.npz
+*.txt
