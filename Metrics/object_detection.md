@@ -163,13 +163,13 @@ Pascal VOC2010之前將 Recall 分成 11 個點，分別為 `{0, 0.1, , …, 0.9
 AP = (1+1+1+1+0.833+0.833+0.833+0+0+0+0) / 11 = 0.591
 ```
 
-### Area under curve AUC AP (PASCAL VOC Challenge before 2010)
+### AUC (Area under curve ) AP (PASCAL VOC Challenge after 2010)
 
 Instead of sampling 11 points, we sample p(rᵢ) whenever it drops and computes AP as the sum of the rectangular blocks.
 
 ![](images/ap_7.png)
 
-This definition is called the `Area Under Curve (AUC)`. As shown below, as the interpolated points do not cover where the precision drops, both methods will diverge.
+This definition is called the `Area Under Curve (AUC)`.
 
 ![](images/ap_4.png)
 
@@ -177,6 +177,10 @@ This definition is called the `Area Under Curve (AUC)`. As shown below, as the i
 ```
 AP = 1*0.375 + 0.833*(0.625-0.375) = 0.583
 ```
+
+As shown below, as the interpolated points do not cover where the precision drops, both methods will diverge.
+
+![](images/ap_9.png)
 
 ## mean Average Precision (mAP)
 
