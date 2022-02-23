@@ -1,5 +1,7 @@
 # Machine Learning Learning Notes
 
+Machine Learning learning notes.
+
 ## Categories
 
 ### Courses
@@ -9,6 +11,7 @@
 ### Basics
 
 - [Algorithms](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms)
+  - [Clustering](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms/clustering)
 - [Loss Function](https://github.com/kaka-lin/ML-Notes/tree/master/Loss%20Function)
 - [Metrics](https://github.com/kaka-lin/ML-Notes/tree/master/Metrics)
 
