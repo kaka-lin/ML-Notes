@@ -17,6 +17,41 @@ $ sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
 $ sudo apt-get update
 ```
 
+#### Notes
+
+***2022/05/09 update***
+
+Reference: [Updating the CUDA Linux GPG Repository Key](https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/)
+
+Remove the outdated signing key
+
+```bash
+$ sudo apt-key del 7fa2af80
+```
+
+Install the `new key`, using `Ubuntu 18.04` as example
+
+```bash
+# wget https://developer.download.nvidia.com/compute/cuda/repos/$distro/$arch/cuda-keyring_1.0-1_all.deb
+$ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-keyring_1.0-1_all.deb
+$ sudo dpkg -i cuda-keyring_1.0-1_all.deb
+```
+- Issue: an error not listed here
+
+    ```bash
+    E: Conflicting values set for option Signed-By regarding source https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /: /usr/share/keyrings/cuda-archive-keyring.gpg !=
+    E: The list of sources could not be read.
+    ```
+
+- Solution: If you previously used add-apt-repository to enable the CUDA repository, then remove the duplicate entry.
+
+    ```bash
+    $ sudo sed -i '/developer\.download\.nvidia\.com\/compute\/cuda\/repos/d' /etc/apt/sources.list
+    ```
+
+    Also check for and remove cuda*.list files under the /etc/apt/sources.d/ directory.
+
+
 ### 2. Install NVIDIA driver
 
 ```bash
@@ -45,7 +80,7 @@ sudo apt-get install --no-install-recommends \
     $ cat /usr/local/cuda/version.txt
 
     # or
-    
+
     $ nvcc --version
     ```
 
@@ -71,7 +106,7 @@ $ sudo apt remove --purge nvidia*
 $ sudo apt remove --purge "nvidia*"
 
 # and then
-$ sudo apt autoremove 
+$ sudo apt autoremove
 ```
 
 ### 2. Uninstall CUDA
@@ -84,5 +119,5 @@ $ sudo apt --purge remove cuda*
 $ sudo apt --purge remove "cuda*"
 
 # and then
-$ sudo apt autoremove 
+$ sudo apt autoremove
 ```
