@@ -2,7 +2,7 @@
 
 ## Install
 
-- Ubuntu 18.04 (CUDA 10)
+- Ubuntu 18.04 (CUDA 11)
 
 ### 1. Add NVIDIA package repositories
 
@@ -14,6 +14,10 @@ $ sudo apt-get update
 
 $ wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
 $ sudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+$ sudo apt-get update
+
+$ wget https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/libnvinfer7_7.1.3-1+cuda11.0_amd64.deb
+$ sudo apt install ./libnvinfer7_7.1.3-1+cuda11.0_amd64.deb
 $ sudo apt-get update
 ```
 
@@ -56,20 +60,32 @@ $ sudo dpkg -i cuda-keyring_1.0-1_all.deb
 
 ```bash
 # Search the nvidia-driver version
-$ suao apt search nvidia-driver
+$ sudo apt search nvidia-driver
 
-# Install nvidia-driver-418
-$ sudo apt install --no-install-recommends nvidia-driver-418
+# Install nvidia-driver
+$ sudo apt install --no-install-recommends nvidia-driver-470
+
 # Reboot. Check that GPUs are visible using the command: nvidia-smi
+$ sudo reboot now
 ```
 
 ### 3. Install development and runtime libraries (~4GB)
 
 ```bash
-sudo apt-get install --no-install-recommends \
-    cuda-10-0 \
-    libcudnn7=7.6.2.24-1+cuda10.0  \
-    libcudnn7-dev=7.6.2.24-1+cuda10.0
+# $ sudo apt-get install --no-install-recommends \
+#     cuda-10-0 \
+#     libcudnn7=7.6.2.24-1+cuda10.0  \
+#     libcudnn7-dev=7.6.2.24-1+cuda10.0
+
+# $ sudo apt-get install --no-install-recommends \
+#     cuda-11-0 \
+#     libcudnn8=8.0.4.30-1+cuda11.0  \
+#     libcudnn8-dev=8.0.4.30-1+cuda11.0
+
+$ sudo apt-get install --no-install-recommends \
+    cuda-11-4 \
+    libcudnn8=8.2.4.15-1+cuda11.4  \
+    libcudnn8-dev=8.2.4.15-1+cuda11.4
 ```
 
 ### 4. check CUDA and cuDNN version
@@ -87,11 +103,7 @@ sudo apt-get install --no-install-recommends \
 2. cuDNN
 
     ```bash
-    $ cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
-
-    # or
-
-    $ cat /usr/include/cudnn.h | grep CUDNN_MAJOR -A 2
+    $ cat /usr/include/cudnn_version.h  | grep CUDNN_MAJOR -A 2
     ```
 
 ## Uninstall
