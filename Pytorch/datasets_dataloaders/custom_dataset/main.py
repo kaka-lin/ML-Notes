@@ -1,11 +1,5 @@
-import os
-import gzip
-
-import torch
-from torchvision import datasets
-from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
-import numpy as np
+from torchvision.transforms import ToTensor
 import matplotlib.pyplot as plt
 
 from data_tools import load_fashion_mnist
@@ -26,16 +20,25 @@ labels_map = {
 
 
 if __name__ == "__main__":
-    # Load data from internet
+    # Loading the Fashion-MNIST datasetfrom internet
     load_fashion_mnist()
 
+    # Creating a Custom Dataset for your files
     training_data = CustomDatasetFromFile(
         image_file="data/train-images-idx3-ubyte",
         label_file="data/train-labels-idx1-ubyte",
         transform=ToTensor()
     )
 
+    test_data = CustomDatasetFromFile(
+        image_file="data/t10k-images-idx3-ubyte",
+        label_file="data/t10k-labels-idx1-ubyte",
+        transform=ToTensor()
+    )
+
+    # Creating DataLoader
     train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
+    test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
 
     # Display image and label.
     train_features, train_labels = next(iter(train_dataloader))
@@ -43,6 +46,7 @@ if __name__ == "__main__":
     print(f"Labels batch shape: {train_labels.size()}")
     img = train_features[0].squeeze()
     label = train_labels[0]
+    plt.title(labels_map[label.item()])
+    plt.axis("off")
     plt.imshow(img, cmap="gray")
     plt.show()
-    print(f"Label: {label}")

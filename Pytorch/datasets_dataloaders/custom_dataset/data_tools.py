@@ -1,6 +1,7 @@
 import os
 import gzip
-import six.moves.urllib as urllib
+from pathlib import Path
+import urllib.request
 
 from tqdm import tqdm
 
@@ -50,8 +51,13 @@ def load_fashion_mnist():
         os.mkdir(data_dir)
 
     for resource in resources:
-        url = download_base + resource
-        file_path = os.path.join(data_dir, resource)
-        print(f"Downloading {url}")
-        download_from_url(url, file_path)
-        extract_gz_file(file_path)
+        # check if file exits
+        if Path(data_dir + '/' + resource).is_file():
+            print(f"file '{resource}' already exists in {data_dir} folder")
+            continue
+        else:
+            url = download_base + resource
+            file_path = os.path.join(data_dir, resource)
+            print(f"Downloading {url}")
+            download_from_url(url, file_path)
+            extract_gz_file(file_path)
