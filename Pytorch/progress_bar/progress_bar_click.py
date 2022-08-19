@@ -19,7 +19,7 @@ BATCH_SIZE = 8
 x = torch.randn((1000, 3, 224, 224))
 y = torch.randint(0, 10, (1000,))
 dataset = TensorDataset(x, y)
-loader = DataLoader(dataset,  batch_size=BATCH_SIZE, shuffle=True)
+train_loader = DataLoader(dataset,  batch_size=BATCH_SIZE, shuffle=True)
 
 # Create a simple model
 model = nn.Sequential(
@@ -33,10 +33,13 @@ print(model)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
+# Training
 for epoch in range(NUM_EPOCHS):
-    n_batches = len(loader)
+    # set models to train mode
+    model.train()
+
     print('Epoch {}/{}'.format(epoch+1, NUM_EPOCHS))
-    with click.progressbar(iterable=loader,
+    with click.progressbar(iterable=train_loader,
                            label='',
                            show_percent=True, show_pos=True,
                            item_show_func=metrics_report_func,
@@ -45,14 +48,12 @@ for epoch in range(NUM_EPOCHS):
         for idx, (x, y) in enumerate(bar):
             x, y = x.to(device), y.to(device)
 
-            # Clear gradients
-            optimizer.zero_grad()
-
             # forward
             pred = model(x)
             loss = loss_fn(pred, y)  # calculate loss
 
             # backward
+            optimizer.zero_grad() # clear gradients
             loss.backward()
             optimizer.step()  # update parameters
 

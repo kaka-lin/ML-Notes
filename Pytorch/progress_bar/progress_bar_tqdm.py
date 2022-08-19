@@ -4,6 +4,7 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 from tqdm import tqdm
 
+
 # Get cpu or gpu device for training.
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print("Using {} device".format(device))
@@ -16,7 +17,7 @@ BATCH_SIZE = 8
 x = torch.randn((1000, 3, 224, 224))
 y = torch.randint(0, 10, (1000,))
 dataset = TensorDataset(x, y)
-loader = DataLoader(dataset,  batch_size=8, shuffle=True)
+train_loader = DataLoader(dataset,  batch_size=BATCH_SIZE, shuffle=True)
 
 # Create a simple model
 model = nn.Sequential(
@@ -32,25 +33,28 @@ optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
 # Training
 for epoch in range(NUM_EPOCHS):
-    loop = tqdm(loader)
-    for idx, (x, y) in enumerate(loop):
-        x, y = x.to(device), y.to(device)
+    # set models to train mode
+    model.train()
 
-        # Clear gradients
-        optimizer.zero_grad()
+    # use prefetch_generator and tqdm for iterating through data
+    n_batches = len(train_loader)
+    with tqdm(train_loader, total=n_batches) as pbar:
+        for idx, (x, y) in enumerate(pbar):
+            x, y = x.to(device), y.to(device)
 
-        # forward
-        pred = model(x)
-        loss = loss_fn(pred, y)  # calculate loss
+            # forward
+            pred = model(x)
+            loss = loss_fn(pred, y)  # calculate loss
 
-        # backward
-        loss.backward()
-        optimizer.step()  # update parameters
+            # backward
+            optimizer.zero_grad() # clear gradien
+            loss.backward()
+            optimizer.step()  # update parameters
 
-        # get the index of the max log-probability
-        pred = pred.max(1, keepdim=True)[1]
-        correct = pred.eq(y.view_as(pred)).sum().item()
-        accuracy = correct / BATCH_SIZE
+            # get the index of the max log-probability
+            pred = pred.max(1, keepdim=True)[1]
+            correct = pred.eq(y.view_as(pred)).sum().item()
+            accuracy = correct / BATCH_SIZE
 
-        loop.set_description(f"Epoch [{epoch+1}/{NUM_EPOCHS}]")
-        loop.set_postfix(loss=loss.item(), acc=accuracy)
+            pbar.set_description(f"Epoch [{epoch+1}/{NUM_EPOCHS}]")
+            pbar.set_postfix(loss=loss.item(), acc=accuracy)

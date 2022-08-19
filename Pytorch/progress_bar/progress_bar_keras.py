@@ -4,8 +4,6 @@ import torch.optim as optim
 from torch.utils.data import TensorDataset, DataLoader
 import tensorflow as tf
 
-from utils import metrics_report_func
-
 
 # Get cpu or gpu device for training.
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -19,7 +17,7 @@ BATCH_SIZE = 8
 x = torch.randn((1000, 3, 224, 224))
 y = torch.randint(0, 10, (1000,))
 dataset = TensorDataset(x, y)
-loader = DataLoader(dataset,  batch_size=BATCH_SIZE, shuffle=True)
+train_loader = DataLoader(dataset,  batch_size=BATCH_SIZE, shuffle=True)
 
 # Create a simple model
 model = nn.Sequential(
@@ -33,21 +31,23 @@ print(model)
 loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
+# Training
 for epoch in range(NUM_EPOCHS):
-    n_batches = len(loader)
+    # set models to train mode
+    model.train()
+
+    n_batches = len(train_loader)
     print(f'Epoch {epoch+1}/{NUM_EPOCHS}')
     bar = tf.keras.utils.Progbar(target=n_batches)
-    for idx, (x, y) in enumerate(loader):
+    for idx, (x, y) in enumerate(train_loader):
         x, y = x.to(device), y.to(device)
-
-        # Clear gradients
-        optimizer.zero_grad()
 
         # forward
         pred = model(x)
         loss = loss_fn(pred, y)  # calculate loss
 
         # backward
+        optimizer.zero_grad() # clear gradients
         loss.backward()
         optimizer.step()  # update parameters
 
@@ -57,5 +57,5 @@ for epoch in range(NUM_EPOCHS):
         accuracy = correct / BATCH_SIZE
 
         bar.update(idx,
-            values=[("loss", loss.item()), ("ass", accuracy)])
+            values=[("loss", loss.item()), ("acc", accuracy)])
     print()
