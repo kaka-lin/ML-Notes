@@ -1,14 +1,11 @@
 import os
 import errno
 
-import click
 import torch
-from torch.autograd import Variable
 from torchvision.datasets import MNIST
 import torchvision.transforms as transforms
-import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+from tqdm import tqdm
 
 
 def valid_imshow_data(data):
@@ -43,75 +40,76 @@ def load_data():
 
 
 def metrics_report_func(x):
+    if x is None:
+        return 'loss: - acc: '
     if x is not None:
         loss, accuracy = x
-        return 'loss: {:.4f} - acc: {:.4f}'.format(loss.item(), accuracy)
+        return 'loss: {:.4f} - acc: {:.4f}'.format(loss, accuracy)
 
 
-def train_model(model, train_loader, optimizer, loss, batch_size, isCUDA=False):
+def train(model, train_loader, optimizer, loss_fn,
+          epoch, epochs, batch_size, device):
+    # Sets the model in training mode.
     model.train()
-    _accuracy = 0
-    _error = torch.tensor([0])
-    with click.progressbar(iterable=train_loader,
-                           show_pos=True, show_percent=True,
-                           fill_char='#', empty_char=' ',
-                           label='train', width=30,
-                           item_show_func=metrics_report_func) as bar:
-        for batch_idx, (data, target) in enumerate(bar):
-            if isCUDA:
-                data, target = data.cuda(), target.cuda()
-            optimizer.zero_grad()
-            output = model(data)
-            error = loss(output, target)
+
+    # use prefetch_generator and tqdm for iterating through data
+    n_batches = len(train_loader)
+    with tqdm(train_loader, total=n_batches) as pbar:
+        for batch_idx, (data, target) in enumerate(pbar):
+            data, target = data.to(device), target.to(device)
+
+            # forward
+            pred = model(data)
+            loss = loss_fn(pred, target)
+
+            # backward
+            optimizer.zero_grad() # clear gradien
+            loss.backward()
+            optimizer.step()  # update parameters
+
             # get the index of the max log-probability
-            pred = output.max(1, keepdim=True)[1]
+            pred = pred.max(1, keepdim=True)[1]
             correct = pred.eq(target.view_as(pred)).sum().item()
             accuracy = correct / batch_size
 
-            bar.current_item = [error, accuracy]
-            _error = error
-            _accuracy = accuracy
-
-            error.backward()
-            optimizer.step()
-
-        bar.current_item = [_error, _accuracy]
-        bar.render_progress()
+            pbar.set_description(f"Epoch [{epoch+1}/{epochs}]")
+            pbar.set_postfix(loss=loss.item(), acc=accuracy)
 
 
-def test_model(model, test_loader, loss, batch_size, isCUDA=False):
+def test(model, test_loader, loss_fn, device):
+    # Sets the model in testing mode.
     model.eval()
+
     test_error = 0
     correct = 0
-    with click.progressbar(iterable=test_loader,
-                           show_pos=True, show_percent=True,
-                           fill_char='#', empty_char=' ',
-                           label='test', width=30,
-                           item_show_func=metrics_report_func) as bar:
+    n_batches = len(test_loader)
 
+    with tqdm(test_loader, total=n_batches) as pbar:
         with torch.no_grad():
-            for data, target in bar:
-                if isCUDA:
-                    data, target = data.cuda(), target.cuda()
-                output = model(data)
-                test_error += loss(output, target)
-                pred = output.max(1, keepdim=True)[1]
+            for batch_idx, (data, target) in enumerate(pbar):
+                data, target = data.to(device), target.to(device)
+
+                # forward
+                pred = model(data)
+                test_error += loss_fn(pred, target).item()
+
+                # get the index of the max log-probability
+                pred = pred.max(1, keepdim=True)[1]
                 correct += pred.eq(target.view_as(pred)).sum().item()
 
-                bar.current_item = None
+                accuracy = correct / len(test_loader.dataset)
+                test_error /= n_batches
 
-        accuracy = correct / len(test_loader.dataset)
-        test_error /= (len(test_loader.dataset)/batch_size)
-        bar.current_item = [test_error, accuracy]
-        bar.render_progress()
+                pbar.set_description(f"{batch_idx+1}/{n_batches}")
+                pbar.set_postfix(loss=test_error, acc=accuracy)
 
 
 def save_model(model, path='./', mode='train',
                model_name='model', **kwargs):
     if mode == 'checkpoint':
-        path = path + 'models/pre_trains/{}_checkpoint.tar'.format(model_name)
+        path = path + 'models/pre_trains/{}_ckpt.pth'.format(model_name)
     else:
-        path = path + 'models/pre_trains/{}.pkl'.format(model_name)
+        path = path + 'models/pre_trains/{}.pth'.format(model_name)
 
     if not os.path.exists(os.path.dirname(path)):
         try:

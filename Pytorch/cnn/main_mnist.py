@@ -1,14 +1,10 @@
-import os
-import errno
-import time
-
+import click
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 
 from models.models import CNN
-from utils import *
+from utils import load_data, train, test, save_model
 
 
 @click.command()
@@ -22,55 +18,55 @@ from utils import *
 def main(batch_size, epochs, lr,
          saveModel, save_model_mode, model_name,
          testMode):
+    # Get Device for Training
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using {device} device")
 
-    isCUDA = torch.cuda.is_available()
-    # Load data
+    # Loading data
     train_data, test_data = load_data()
     train_loader = torch.utils.data.DataLoader(
         train_data, batch_size=batch_size, shuffle=True)
     test_loader = torch.utils.data.DataLoader(
         test_data, batch_size=batch_size, shuffle=True)
 
-    # Initialize model, optimizer, loss
-    model = CNN()
-    if isCUDA:
-        model.cuda()
-    loss = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=lr)
-
     if not testMode:
-        for epoch in range(0, epochs):
-            print('Epoch {}/{}'.format(epoch+1, epochs))
-            train_model(model, train_loader, optimizer,
-                        loss, batch_size, isCUDA)
+        # Creating the model
+        model = CNN().to(device)
+        #print(model)
 
-        test_model(model, test_loader, loss, batch_size, isCUDA)
+        # Compile the model: optimizer and loss
+        loss_fn = nn.CrossEntropyLoss()
+        optimizer = optim.Adam(model.parameters(), lr=lr)
+
+        for epoch in range(epochs):
+            train(model, train_loader,
+                  optimizer, loss_fn,
+                  epoch, epochs, batch_size, device)
+
+        test(model, test_loader, loss_fn, device)
 
         # Save model
         if saveModel:
             checkpoint = {
                 'epoch': epochs,
                 'optimizer_state_dict': optimizer.state_dict(),
-                'loss': loss
+                'loss': loss_fn
             }
             save_model(model, mode=save_model_mode,
                        model_name=model_name, **checkpoint)
     else:
-        # Load model
-        model = CNN()
-        if isCUDA:
-            model.cuda()
-        loss = nn.CrossEntropyLoss()
-        optimizer = optim.Adam(model.parameters())
+        # Creating the model
+        model = CNN().to(device)
+        optimizer = optim.Adam(model.parameters(), lr=lr)
 
         checkpoint = torch.load(
-            './models/pre_trains/binary_model_checkpoint.tar')
+            './models/pre_trains/binary_model_ckpt.pth')
         model.load_state_dict(checkpoint['model_state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-        epoch = checkpoint['epoch']
-        loss = checkpoint['loss']
+        epochs = checkpoint['epoch']
+        loss_fn = checkpoint['loss']
 
-        test_model(model, test_loader, loss, batch_size, isCUDA)
+        test(model, test_loader, loss_fn, device)
 
 
 if __name__ == "__main__":
