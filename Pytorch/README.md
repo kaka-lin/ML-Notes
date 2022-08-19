@@ -9,6 +9,12 @@ If you want to build yourself docker image or get information about this image, 
 $ docker run --rm -it \
     --gpus all \
     --ipc=host \
-    -v $PWD/:/root/ML-Notes \
-    kakalin/kimage:cuda11.1-torch1.8-devel
+    -v $PWD/:/root/pytorch \
+    -w /root/pytorch \
+    kakalin/kimage:cuda11.3-torch1.12.0-devel
 ```
+
+## Categories
+
+- [Tensors](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch/tensors)
+- [Datasets & DataLoaders](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch/datasets_dataloaders)
