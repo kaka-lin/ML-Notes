@@ -10,9 +10,13 @@
 
     ![](data/street_resize.jpg)
 
-- Resized with keeping aspect ratio - `letterbox_image()`
+- `[Square Inference]` Resized with keeping aspect ratio - `letterbox_image()`
 
     ![](data/street_letterbox.jpg)
+
+- `[Rectangular Inference]`Resized with keeping aspect ratio - `letterbox_rect_image()`
+
+    ![](data/street_letterbox_rect.jpg)
 
 ### 1. Resized without keeping aspect ratio - `cv::resize()`
 
@@ -28,7 +32,7 @@ new_image = cv2.resize(image, (new_w, new_h), interpolation=cv2.INTER_LINEAR)
 
 ![](data/street_resize.jpg)
 
-### 2. Resized with keeping aspect ratio - `letterbox_image()`
+### 2. [Square Inference] Resized with keeping aspect ratio - `letterbox_image()`
 
 > Resizing image, `keeping the aspect ratio consistent`, and padding the left out areas with the color (128,128,128)
 
@@ -54,6 +58,46 @@ new_image[h_start:h_start+new_h, w_start:w_start+new_w, :] = image
 
 ![](data/street_letterbox.jpg)
 
+### 3. [Rectangular Inference] Resized with keeping aspect ratio - `letterbox_rect_image()`
+
+如上我們可以看到，在 `letterbox_image()` 的方法中，image 存在大量多餘的區域(padding area)，於是就想到能否去掉這些多餘的 padding area 且又要滿足長寬是 32 的倍數。
+
+> Rectangular 思想: 去掉多餘 padding area，且長寬又滿足 32 的倍數
+
+
+具體方法與 `letterbox_image()` 差不多:
+
+1. 計算縮放比例。
+2. 圖片按照比例縮放。較長邊為 416
+3. 另一個比較短的邊進行最少的填充，使其滿足 32 的倍數
+
+```python
+h, w, _ = image.shape
+desired_w, desired_h = size
+
+# 1. Scale ration: (new / old)
+scale = min(desired_w/w, desired_h/h)
+
+# 2. Compute padding
+new_w, new_h = int(w * scale), int(h * scale) # unpad size
+pad_w, pad_h = desired_w - new_w, desired_h - new_h
+if auto: # minimum rectangle
+    # 取餘數操作，保證 padding 後的圖片是 32 (416x416) or 64 (512x512) 的整數倍
+    pad_w, pad_h = np.mod(pad_w, 32), np.mod(pad_h, 32)
+
+image = cv2.resize(image, (new_w, new_h), interpolation=cv2.INTER_LINEAR)
+
+# Put the image that after resized into the center of new image
+# 將縮放後的圖片放入新圖片的正中央
+h_start = pad_h // 2
+w_start = pad_w // 2
+#new_image[h_start:h_start+new_h, w_start:w_start+new_w, :] = image
+new_image = cv2.copyMakeBorder(image, h_start, h_start, w_start, w_start,
+                               cv2.BORDER_CONSTANT, value=(128, 128, 128))
+```
+
+![](data/street_letterbox_rect.jpg)
+
 ## Usage
 
 ```bash
@@ -64,3 +108,4 @@ $ python3 resize.py
 
 - [darknet-AB, Resizing : keeping aspect ratio, or not](https://github.com/AlexeyAB/darknet/issues/232)
 - [YOLO網路圖像前處理的討論(resize or letterbox)](https://zhuanlan.zhihu.com/p/469436103)
+- [ultralytics/yolov5](https://github.com/ultralytics/yolov5/blob/master/utils/augmentations.py)
