@@ -17,4 +17,4 @@ Refer to the links as below to dive deeper.
 
 #### Image classification
 
-- [MNIST (手寫辨識)](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch/cnn_mnist)
+- [MNIST (手寫辨識)](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch/examples/cnn_mnist)
