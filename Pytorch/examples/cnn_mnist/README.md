@@ -1,4 +1,4 @@
-# Convolutional Neural Network(CNN)
+# MNIST: Handwriting Recognition (手寫辨識)
 
 ## Require
 

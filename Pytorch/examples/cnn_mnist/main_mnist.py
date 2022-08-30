@@ -3,8 +3,10 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from models.models import CNN
-from utils import load_data, train, test, save_model
+from data.dataset import load_data
+from model.model import CNN
+from trainer.trainer import train, test
+from utils.common import save_model
 
 
 @click.command()
@@ -22,7 +24,7 @@ def main(batch_size, epochs, lr,
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device} device")
 
-    # Loading data
+    # Loading dataset and Creating data loaders
     train_data, test_data = load_data()
     train_loader = torch.utils.data.DataLoader(
         train_data, batch_size=batch_size, shuffle=True)
