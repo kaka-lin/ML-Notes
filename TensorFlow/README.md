@@ -40,8 +40,15 @@ If you want to install `tensorflow-gpu`, you need to have `NVIDIA® GPU card wit
 
 - [Build models with `subclassing`](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/01_classification_mnist_model_subclassing.ipynb)
 
+- [Writing a training loop from scratch](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/keras/custom_training_loop)
+  - [Progress Bar](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/keras/custom_training_loop/progress_bar)
+
 ### 3. Data input pipeline (tf.data)
 
 - Load and preprocess data
 
     - [TFRecord and tf.Example](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/data/load_and_preprocess_data/tfrecords)
+
+### 4. Automatic Differentiation (tf.GradientTape)
+
+- [Introduction](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/gradientTape/01_introduction.md)
