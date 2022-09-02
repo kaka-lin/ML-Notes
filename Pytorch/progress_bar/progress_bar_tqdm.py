@@ -38,7 +38,9 @@ for epoch in range(NUM_EPOCHS):
 
     # use prefetch_generator and tqdm for iterating through data
     n_batches = len(train_loader)
-    with tqdm(train_loader, total=n_batches) as pbar:
+    print(f'Epoch {epoch+1}/{NUM_EPOCHS}')
+    with tqdm(train_loader, total=n_batches,
+              bar_format='{desc:<5.5}{percentage:3.0f}%|{bar:36}{r_bar}') as pbar:
         for idx, (x, y) in enumerate(pbar):
             x, y = x.to(device), y.to(device)
 
@@ -56,5 +58,7 @@ for epoch in range(NUM_EPOCHS):
             correct = pred.eq(y.view_as(pred)).sum().item()
             accuracy = correct / BATCH_SIZE
 
-            pbar.set_description(f"Epoch [{epoch+1}/{NUM_EPOCHS}]")
-            pbar.set_postfix(loss=loss.item(), acc=accuracy)
+            # pbar.set_description(f"Epoch [{epoch+1}/{NUM_EPOCHS}]")
+            pbar.set_postfix({
+                'loss': loss.item(),
+                'accuracy': accuracy})

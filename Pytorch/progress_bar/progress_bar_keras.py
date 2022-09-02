@@ -38,7 +38,8 @@ for epoch in range(NUM_EPOCHS):
 
     n_batches = len(train_loader)
     print(f'Epoch {epoch+1}/{NUM_EPOCHS}')
-    bar = tf.keras.utils.Progbar(target=n_batches)
+    bar = tf.keras.utils.Progbar(target=n_batches,
+                                 stateful_metrics=["loss", "accuracy"])
     for idx, (x, y) in enumerate(train_loader):
         x, y = x.to(device), y.to(device)
 
@@ -57,5 +58,5 @@ for epoch in range(NUM_EPOCHS):
         accuracy = correct / BATCH_SIZE
 
         bar.update(idx,
-            values=[("loss", loss.item()), ("acc", accuracy)])
+            values=[("loss", loss.item()), ("accuracy", accuracy)])
     print()

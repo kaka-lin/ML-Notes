@@ -38,7 +38,7 @@ for epoch in range(NUM_EPOCHS):
     # set models to train mode
     model.train()
 
-    print('Epoch {}/{}'.format(epoch+1, NUM_EPOCHS))
+    print(f'Epoch {epoch+1}/{NUM_EPOCHS}')
     with click.progressbar(iterable=train_loader,
                            label='',
                            show_percent=True, show_pos=True,
