@@ -4,9 +4,9 @@ The collection of the `progress bar` methods for [tf.GradientTape](https://www.t
 
 詳細 code 請看:
 
-- [progress_bar_tqdm.py](https://github.com/kaka-lin/ML-Notes/blob/master/Pytorch/progress_bar/progress_bar_tqdm.py)
-- [progress_bar_keras.py](https://github.com/kaka-lin/ML-Notes/blob/master/Pytorch/progress_bar/progress_bar_keras.py)
-- [progress_bar_click.py](https://github.com/kaka-lin/ML-Notes/blob/master/Pytorch/progress_bar/progress_bar_click.py)
+- [progress_bar_tqdm.py](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/custom_training_loop/progress_bar/progress_bar_tqdm.py)
+- [progress_bar_keras.py](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/custom_training_loop/progress_bar/progress_bar_keras.py)
+- [progress_bar_click.py](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/custom_training_loop/progress_bar/progress_bar_click.py)
 
 ## 1. `tqdm`
 
