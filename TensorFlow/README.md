@@ -23,10 +23,16 @@ If you want to install `tensorflow-gpu`, you need to have `NVIDIA® GPU card wit
 
 ## Examples
 
+Except for the examples we mention below, others examples please see [here](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/examples).
+
+#### YOLO Series
+
 - [kaka-lin/yolov2-tf2](https://github.com/kaka-lin/yolov2-tf2)
 - [kaka-lin/yolov3-tf2](https://github.com/kaka-lin/yolov3-tf2)
 
 ## Learning Notes
+
+All the files of notes are using `jupyter file (.ipynb)`, if you want to view and use `.py` file structure, please see all projects in the [examples folder](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/examples).
 
 ### 1. Beginner quickstart
 
@@ -34,11 +40,17 @@ If you want to install `tensorflow-gpu`, you need to have `NVIDIA® GPU card wit
 
 ### 2. Keras (tf.Keras)
 
-- [Image Classification - MNIST](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/01_classification_mnist.ipynb)
+#### Image Classification
 
-- [Text Classification - IMDB](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/02_classification_imdb.ipynb)
+- MNIST
+  - Sequential model: [Image Classification - MNIST](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/01_classification_mnist.ipynb)
+  - Subclassing: - [Build models with `subclassing`](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/01_classification_mnist_model_subclassing.ipynb)
 
-- [Build models with `subclassing`](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/01_classification_mnist_model_subclassing.ipynb)
+#### Text Classification
+
+- IMDB: [Text Classification - IMDB](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/keras/02_classification_imdb.ipynb)
+
+#### Custom training
 
 - [Writing a training loop from scratch](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/keras/custom_training_loop)
   - [Progress Bar](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/keras/custom_training_loop/progress_bar)

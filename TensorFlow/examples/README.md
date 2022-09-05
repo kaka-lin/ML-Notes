@@ -1,4 +1,4 @@
-# Examples of PyTorch
+# Examples of Tensorflow 2
 
 This folder includes examples of common tasks in machine learning.
 
@@ -17,4 +17,4 @@ Refer to the links as below to dive deeper.
 
 #### Image classification
 
-- [MNIST (手寫辨識)](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch/examples/cnn_mnist)
+- [MNIST (手寫辨識)](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/examples/cnn_mnist)
