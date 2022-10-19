@@ -27,7 +27,9 @@ Machine Learning learning notes.
 ### Model Serving
 
 - [YOLOv3 OVMS Service with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov3-ovms)
-- [Tiny YOLOv4 TensorFlow Lite Service on Ubuntu with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov4-tiny-tflite)
+- [A YOLOv3 OVMS Service with REST API to Azure IoT Edge](https://github.com/kaka-lin/yolov3-ovms-iotedge)
+- [Tiny YOLOv4 TensorFlow Lite with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov4-tiny-tflite)
+
 
 ### Edge Computing
 
