@@ -8,6 +8,11 @@ Machine Learning learning notes.
 
 - [ML-Courses](https://github.com/kaka-lin/ML-Courses)
 
+### Frameworks
+
+- [TensorFlow](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow)
+- [PyTorch](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch)
+
 ### Basics
 
 - [Algorithms](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms)
@@ -15,12 +20,11 @@ Machine Learning learning notes.
 - [Loss Function](https://github.com/kaka-lin/ML-Notes/tree/master/Loss%20Function)
 - [Metrics](https://github.com/kaka-lin/ML-Notes/tree/master/Metrics)
 
-### Frameworks
+### Model compression and acceleration
 
-- [TensorFlow](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow)
-- [PyTorch](https://github.com/kaka-lin/ML-Notes/tree/master/Pytorch)
+- [Model Optimization](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20optimization)
 
-### Deep learning
+### Application
 
 - [Object Detection](https://github.com/kaka-lin/ML-Notes/tree/master/Object%20Detection)
 
