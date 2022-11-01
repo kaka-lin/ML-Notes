@@ -8,9 +8,9 @@ There are several post-training quantization options to choose from. Here is a s
 
 | 技術 | 好處 | 硬體 |
 | :-: | :-: | :-: |
-| Dynamic range quantization | 4x smaller, 2x-3x speedup | CPU |
-| Full integer quantization | 4x smaller, 3x+ speedup | CPU, Edge TPU, Microcontrollers |
-| Float16 quantization  | 2x smaller, GPU acceleration | CPU, GPU |
+| [Dynamic range quantization](#dynamic-range-quantization) | 4x smaller, 2x-3x speedup | CPU |
+| [Full integer quantization](#full-integer-quantization) | 4x smaller, 3x+ speedup | CPU, Edge TPU, Microcontrollers |
+| [Float16 quantization](#float16-quantization)  | 2x smaller, GPU acceleration | CPU, GPU |
 
 Tensorflow 提供了以下 decision tree 幫助我們判斷哪種量化方案最適合我們，如下:
 
@@ -105,6 +105,53 @@ tflite_quant_model = converter.convert()
 > Creating integer only models is a common use case for [TensorFlow Lite for Microcontrollers](https://www.tensorflow.org/lite/microcontrollers) and [Coral Edge TPUs](https://coral.ai/).
 
 ### Float16 quantization
+
+您可以通過將`權重 (weights)`量化為 `float16` 來減小 model 的大小。
+
+優點:
+
+- 模型大小縮減一半 (因為所有權重都變成了原始大小的一半)
+- 準確率的損失最小
+- 支持一些可以直接對 `float16` data 進行運算的 delegates (例如: GPU delegate)，從而使執行速度更快 (比 float32 計算更快)
+
+缺點:
+
+- It does not reduce latency as much as a quantization to fixed point math.
+
+- By default, a float16 quantized model will "dequantize" the weights values to float32 when run on the CPU.
+
+    > Note that the GPU delegate will not perform this dequantization, since it can operate on float16 data.)
+
+如下步驟:
+
+```python
+converter = tf.lite.TFLiteConverter.from_saved_model(saved_model_dir)
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+converter.target_spec.supported_types = [tf.float16]
+tflite_quant_model = converter.convert()
+```
+
+## Model accuracy
+
+由於`權重是在訓練後量化的`，因此`可能會降低準確性`，尤其是對於較小的 networks。
+
+另外如果準確度下降太多，請考慮使用[量化感知訓練 (quantization aware training)](https://www.tensorflow.org/model_optimization/guide/quantization/training)，但是這樣做需要在模型訓練期間進行修改以添加 `fake quantization nodes`。
+
+> - Pre-trained fully quantized models are provided for specific networks on [TensorFlow Hub](https://tfhub.dev/s?deployment-format=lite&q=quantized).
+> - It is important to check the accuracy of the quantized model to verify that any degradation in accuracy is within acceptable limits. There are tools to evaluate [TensorFlow Lite model accuracy](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/evaluation/tasks).
+
+## Representation for quantized tensors
+
+8-bit quantization approximates floating point values using the following formula.
+
+$$real\_value = (int8\_value - zero\_point) \times scale$$
+
+The representation has two main parts:
+
+- Per-axis (aka per-channel) or per-tensor weights represented by int8 two’s complement values in the range [-127, 127] with zero-point equal to 0.
+- Per-tensor activations/inputs represented by int8 two’s complement values in the range [-128, 127], with a zero-point in range [-128, 127].
+
+For a detailed view of our quantization scheme, please see our [quantization spec](https://www.tensorflow.org/lite/performance/quantization_spec). Hardware vendors who want to plug into TensorFlow Lite's delegate interface are encouraged to implement the quantization scheme described there.
 
 ## Reference
 
