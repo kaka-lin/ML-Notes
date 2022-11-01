@@ -7,7 +7,7 @@
 - Clustering
 - Knowledge Distillation
 
-### 量化 (Quantization)
+### 1. 量化 (Quantization)
 
 量化的工作原理是降低用於表示模型參數的數字 (默認情況下是 32 位浮點數) 的精度，默認情況下是 32 位浮點數。 這樣可以獲得較小的模型和更快的計算。
 
@@ -15,7 +15,7 @@
 
 分為以下兩種:
 
-- `訓練後量化 (Post Training Quantization)`
+- [訓練後量化 (Post Training Quantization)](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20optimization/Post%20Training%20Quantization)
 - `量化感知訓練 (Quantization Aware Training)`
 
 TensorFlow Lite 提供以下量化類型:
@@ -31,19 +31,19 @@ Tensorflow 提供了以下 decision tree 幫助我們依據預期的 model size 
 
 ![](images/quantization_decision_tree.png)
 
-### 剪枝 (Pruning)
+### 2. 剪枝 (Pruning)
 
 [Pruning](https://www.tensorflow.org/model_optimization/guide/pruning) works by removing parameters within a model that have only a minor impact on its predictions. Pruned models are the same size on disk, and have the same runtime latency, but can be compressed more effectively. This makes pruning a useful technique for reducing model download size.
 
 模型剪枝的目標是只保留重要的權重、參數，希望模型保持相同的性能、效果，同時可以降低計算成本，並且也減少了模型的儲存空間，另外在開發時，還可以加速訓練過程。基本的模型剪枝原理就是去掉權重中不重要的值，以深度學習模型為例，就是減少神經網路層之間的連接數量，這樣就可以減少計算中涉及的參數，從而降低計算次數，如此會碰到的問題就是模型的表現會降低，所以模型剪枝可以說是模型參數量及模型的表現之間的交易（trade-off）。
 
-### Clustering
+### 3. Clustering
 
 [Clustering](https://www.tensorflow.org/model_optimization/guide/clustering) works by `grouping the weights` of each layer in a model into a predefined number of clusters, then sharing the centroid values for the weights belonging to each individual cluster. This reduces the number of unique weight values in a model, thus reducing its complexity.
 
 As a result, clustered models can be compressed more effectively, providing deployment benefits similar to pruning.
 
-### 知識蒸餾 (Knowledge Distillation)
+### 4. 知識蒸餾 (Knowledge Distillation)
 
 Knowledge Distillation is a procedure for model compression, in which a small (student) model is trained to match a large pre-trained (teacher) model. Knowledge is transferred from the teacher model to the student by minimizing a loss function, aimed at matching softened teacher logits as well as ground-truth labels.
 

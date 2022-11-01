@@ -17,5 +17,5 @@ $ python3 main_mnist.py
 Test mode in ```MNIST```
 
 ```bash
-$ python3 main_mnist.py --test-mode 1
+$ python3 main_mnist.py --test_mode 1
 ```
