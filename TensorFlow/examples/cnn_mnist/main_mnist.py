@@ -103,8 +103,8 @@ def main(argv):
                 test_step(model, x_test, y_test, loss_fn,
                           test_loss, test_accuracy)
                 pbar.set_postfix({
-                        'loss': test_loss.result().numpy(),
-                        'accuracy': test_accuracy.result().numpy()})
+                    'loss': test_loss.result().numpy(),
+                    'accuracy': test_accuracy.result().numpy()})
 
         test_acc = test_accuracy.result() * 100
         test_loss.reset_states()
