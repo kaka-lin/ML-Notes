@@ -73,7 +73,7 @@ quantized_model = torch.quantization.quantize_dynamic(model, {需要量化的lay
 
     其他方法請參考: [TensorFlow 官網](https://www.tensorflow.org/lite/performance/post_training_quantization#full_integer_quantization)
 
-在 Tensorflow 中有兩種轉換模式
+在 Tensorflow 中，對於要量化模型的程度，有多種選擇，如下所示。
 
 #### 1. Integer with float fallback (using default float input/output)
 
@@ -90,7 +90,7 @@ tflite_quant_model = converter.convert()
 
 #### 2. Integer only
 
-Additionally, to ensure compatibility with integer only devices (such as 8-bit microcontrollers) and accelerators (such as the Coral Edge TPU), you can enforce full integer quantization for all ops including the input and output, by using the following steps:
+Additionally, to ensure compatibility with integer only devices (such as 8-bit microcontrollers) and accelerators (such as the `Coral Edge TPU`), you can enforce `full integer quantization` for all ops including the input and output, by using the following steps:
 
 ```python
 converter = tf.lite.TFLiteConverter.from_saved_model(saved_model_dir)

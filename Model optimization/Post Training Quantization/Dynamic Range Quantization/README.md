@@ -39,6 +39,15 @@ The activations are always stored in floating point. For ops that support quanti
 
 > 請務必檢查量化模型的準確率，以確保下降程度是可以接受的。
 
+
+Code:
+
+```python
+converter = tf.lite.TFLiteConverter.from_saved_model(saved_model_dir)
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+tflite_quant_model = converter.convert()
+```
+
 ### Example
 
 This example trains an MNIST model from scratch, checks its accuracy in TensorFlow, and then converts the model into a Tensorflow Lite flatbuffer with dynamic range quantization. Finally, it checks the accuracy of the converted model and compare it to the original float model.
@@ -60,3 +69,7 @@ Model Accuracy:
 
 - [example/dynamic_range_quantization.ipynb](https://github.com/kaka-lin/ML-Notes/blob/master/Model%20optimization/Post%20Training%20Quantization/Dynamic%20Range%20Quantization/example/dynamic_range_quantization.ipynb)
   - Colab: <a href="https://colab.research.google.com/github/kaka-lin/ML-Notes/blob/master/Model%20optimization/Post%20Training%20Quantization/Dynamic%20Range%20Quantization/example/dynamic_range_quantization.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+## Reference
+
+- [Post-training dynamic range quantization](https://www.tensorflow.org/lite/performance/post_training_quant)
