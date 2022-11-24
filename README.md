@@ -24,6 +24,10 @@ Machine Learning learning notes.
 
 - [Model Optimization](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20optimization)
 
+### Distributed Training
+
+- [Distributed Training (分散式訓練)](https://github.com/kaka-lin/ML-Notes/tree/master/Distributed%20Training)
+
 ### Application
 
 - [Object Detection](https://github.com/kaka-lin/ML-Notes/tree/master/Object%20Detection)
@@ -33,7 +37,6 @@ Machine Learning learning notes.
 - [YOLOv3 OVMS Service with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov3-ovms)
 - [A YOLOv3 OVMS Service with REST API to Azure IoT Edge](https://github.com/kaka-lin/yolov3-ovms-iotedge)
 - [Tiny YOLOv4 TensorFlow Lite with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov4-tiny-tflite)
-
 
 ### Edge Computing
 
