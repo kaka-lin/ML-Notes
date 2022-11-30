@@ -53,8 +53,12 @@ $ sudo dpkg -i cuda-keyring_1.0-1_all.deb
     $ sudo sed -i '/developer\.download\.nvidia\.com\/compute\/cuda\/repos/d' /etc/apt/sources.list
     ```
 
-    Also check for and remove cuda*.list files under the /etc/apt/sources.d/ directory.
+    Also check for and remove `cuda*.list` files under the /etc/apt/sources.d/ directory.
 
+    ```bash
+    $ cd /etc/apt/sources.list.d
+    $ sudo rm cuda*.list
+    ```
 
 ### 2. Install NVIDIA driver
 
