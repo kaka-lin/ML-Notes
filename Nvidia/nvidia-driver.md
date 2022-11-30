@@ -23,9 +23,11 @@ $ sudo apt-get update
 
 #### Notes
 
-***2022/05/09 update***
+***2022/11/30 update***
 
-Reference: [Updating the CUDA Linux GPG Repository Key](https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/)
+##### 遇到 Outdated signing key
+
+> Reference: [Updating the CUDA Linux GPG Repository Key](https://developer.nvidia.com/blog/updating-the-cuda-linux-gpg-repository-key/)
 
 Remove the outdated signing key
 
@@ -59,6 +61,11 @@ $ sudo dpkg -i cuda-keyring_1.0-1_all.deb
     $ cd /etc/apt/sources.list.d
     $ sudo rm cuda*.list
     ```
+
+##### 遇到 NO_PUBKEY 的 error
+
+Please see [Linux APT 遇到 NO_PUBKEY 的 error](https://github.com/kaka-lin/Notes/blob/master/Linux/no_pubkey.md).
+
 
 ### 2. Install NVIDIA driver
 
