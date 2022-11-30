@@ -19,7 +19,7 @@ $ jupyter notebook
 
 If you want to install `tensorflow-gpu`, you need to have `NVIDIA® GPU card with CUDA® Compute Capability 3.5 or higher`.
 
-- Install [NVIDIA driver, CUDA Toolkit and cuDNN SDK](./document/nvidia.md).
+- Install [NVIDIA driver, CUDA Toolkit and cuDNN SDK](../Nvidia/nvidia-driver.md).
 
 ## Examples
 
