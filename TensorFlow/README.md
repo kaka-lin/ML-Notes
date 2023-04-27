@@ -6,6 +6,8 @@ This is my `TensorFlow 2.0`'s learning notes and some examples.
 
 You can just install TensorFlow 2.0 with `pip` (as shown below ), or you can use a [docker image](./document/docker_image.md) that we already made.
 
+For Mac M1/M2 please see [TensorFlow on Mac M1/M2 with GPU support.](./document/macos_m1_m2.md)
+
 ```bash
 $ pip install -r requirements.txt
 
