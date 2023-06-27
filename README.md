@@ -15,6 +15,7 @@ Machine Learning learning notes.
 
 ### Basics
 
+- [CNN](https://github.com/kaka-lin/ML-Notes/tree/master/CNN)
 - [Algorithms](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms)
   - [Clustering](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms/clustering)
 - [Loss Function](https://github.com/kaka-lin/ML-Notes/tree/master/Loss%20Function)
