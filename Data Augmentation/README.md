@@ -42,7 +42,10 @@ Data Augmentation 是訓練模型中常見的方法，用來解決資料不足�
 
 - Kernel filters
 - Mixing images
+  - Mixup
+  - CutMix
 - Random erasing
+  - Cutout
 
 ### 2. Based on Deep Learning
 
