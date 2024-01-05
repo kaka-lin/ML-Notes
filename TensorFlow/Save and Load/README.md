@@ -127,3 +127,21 @@ checkpoints/
 ├── my_checkpoint.data-00000-of-00001
 ├── my_checkpoint.index
 ```
+
+##### Issue:
+
+如果在 Load Weights 時遇到下面問題:
+
+```
+Value in checkpoint could not be found in the restored object
+```
+
+可以加上 `expect_partial()` 來解決
+
+- `expect_partial()`: Silence warnings about incomplete checkpoint restores. Warnings are otherwise printed for unused parts of the checkpoint file or object when the Checkpoint object is deleted (often at program shutdown).
+
+如下:
+
+```python
+model.load_weights('./checkpoints/my_checkpoint').expect_partial()
+```
