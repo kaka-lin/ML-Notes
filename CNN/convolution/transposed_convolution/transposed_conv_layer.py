@@ -4,7 +4,7 @@ import tensorflow as tf
 from utils.conv_utils import deconv_output_length
 
 
-class CustomConv2DTransposeLayer(tf.keras.layers.Layer):
+class CustomConv2DTranspose(tf.keras.layers.Layer):
     def __init__(
             self,
             filters,
@@ -16,7 +16,7 @@ class CustomConv2DTransposeLayer(tf.keras.layers.Layer):
             dilation_rate=(1, 1),
             kernel_initializer="glorot_uniform",
             **kwargs):
-        super(CustomConv2DTransposeLayer, self).__init__(**kwargs)
+        super(CustomConv2DTranspose, self).__init__(**kwargs)
 
         self.filters = filters
         self.kernel_size = kernel_size
@@ -172,7 +172,7 @@ if __name__ == "__main__":
     # Custom transposed convolution using `tf.nn.conv2d`
     custom_model = tf.keras.models.Sequential()
     custom_model.add(
-        CustomConv2DTransposeLayer(1, kernel_size=2, strides=1, padding='valid', input_shape=(2, 2, 1))
+        CustomConv2DTranspose(1, kernel_size=2, strides=1, padding='valid', input_shape=(2, 2, 1))
     )
 
     # (weight,)
@@ -185,7 +185,3 @@ if __name__ == "__main__":
     print("filter: \n", filter)
     print("result: \n", keras_output)
     print("custom result: \n", custom_output)
-
-
-
-
