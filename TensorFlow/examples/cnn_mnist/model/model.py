@@ -19,3 +19,12 @@ class CNN(tf.keras.Model):
         x = self.dense1(x)
         x = self.dense2(x)
         return x
+
+
+if __name__=="__main__":
+    model = CNN()
+
+    model.trainable = False
+    input_shape = (28, 28, 1)
+    model.build([None, *input_shape])
+    model.predict(tf.ones((1, *input_shape), tf.float32))
