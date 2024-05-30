@@ -12,6 +12,8 @@ class CNN(tf.keras.Model):
         self.dense1 = Dense(128, activation='relu')
         self.dense2 = Dense(10, activation='softmax')
 
+    # This line defines the inputs' sizes of the network call
+    @tf.function(input_signature=[tf.TensorSpec([None, 28, 28, 1], tf.float32)])
     def call(self, x):
         # Define your forward pass here
         x = self.conv1(x)
