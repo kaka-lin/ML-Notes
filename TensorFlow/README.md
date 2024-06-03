@@ -63,6 +63,7 @@ All the files of notes are using `jupyter file (.ipynb)`, if you want to view an
 
     - [TFRecord and tf.Example](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow/data/load_and_preprocess_data/tfrecords)
 
+    - [The example of advance using of TFRecord (Including using with Sacred).](https://github.com/kaka-lin/tfrecord-examples)
 ### 4. Automatic Differentiation (tf.GradientTape)
 
 - [Introduction](https://github.com/kaka-lin/ML-Notes/blob/master/TensorFlow/gradientTape/01_introduction.md)

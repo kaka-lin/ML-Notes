@@ -12,4 +12,3 @@ This folder is about `Model Serving`
 ### TFLite
 
 - [Tiny YOLOv4 TensorFlow Lite with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov4-tiny-tflite)
-

@@ -8,6 +8,10 @@ Machine Learning learning notes.
 
 - [ML-Courses](https://github.com/kaka-lin/ML-Courses)
 
+### NVIDIA related
+
+- [Install NVIDIA driver](https://github.com/kaka-lin/ML-Notes/blob/master/Nvidia/nvidia-driver.md)
+
 ### Frameworks
 
 - [TensorFlow](https://github.com/kaka-lin/ML-Notes/tree/master/TensorFlow)
@@ -20,6 +24,12 @@ Machine Learning learning notes.
   - [Clustering](https://github.com/kaka-lin/ML-Notes/tree/master/Algorithms/clustering)
 - [Loss Function](https://github.com/kaka-lin/ML-Notes/tree/master/Loss%20Function)
 - [Metrics](https://github.com/kaka-lin/ML-Notes/tree/master/Metrics)
+- [Activation Function](https://github.com/kaka-lin/ML-Notes/tree/master/Activation%20Function)
+- [Normalization](https://github.com/kaka-lin/ML-Notes/tree/master/Normalization)
+
+### Data Related
+
+- [Data Augmentation](https://github.com/kaka-lin/ML-Notes/tree/master/Data%20Augmentation)
 
 ### Model compression and acceleration
 
@@ -29,22 +39,38 @@ Machine Learning learning notes.
 
 - [Distributed Training (分散式訓練)](https://github.com/kaka-lin/ML-Notes/tree/master/Distributed%20Training)
 
-### Application
+### Build Machine Learning Demo Applications
+
+#### 1. Web Application
+
+- [Model Serving (REST API)](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving)
+  - OVMS
+  - TFLite
+
+- [TensorFlow.js](https://www.tensorflow.org/js?hl=zh-tw)
+  - [The TFJS version of EfficientSAM. ](https://github.com/kaka-lin/tfjs-demo)
+
+- [Gradio](https://www.gradio.app/)
+  - [Audio Recognition App](https://github.com/kaka-lin/audio-recognition-app)
+  - [EfficientSAM Tensorflow Demo App](https://github.com/kaka-lin/EfficientSAM-tf2-demo)
+#### 2. Edge Computing
+
+- `Mobile`
+  - [MediaPipe](https://github.com/kaka-lin/mediapipe-notes)
+
+- `AIoT`
+  - [OpenVINO](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/OpenVINO)
+  - [Vitis AI](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/Vitis-AI)
+
+### Other Tools
+
+- [Sacred](https://github.com/kaka-lin/ML-Notes/tree/master/Sacred)
+  - [The example of advance using of TFRecord (Including using with Sacred).](https://github.com/kaka-lin/tfrecord-examples)
+
+## Machine Learning related Applications
 
 - [Object Detection](https://github.com/kaka-lin/ML-Notes/tree/master/Object%20Detection)
 
-### Model Serving
-
-- [YOLOv3 OVMS Service with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov3-ovms)
-- [A YOLOv3 OVMS Service with REST API to Azure IoT Edge](https://github.com/kaka-lin/yolov3-ovms-iotedge)
-- [Tiny YOLOv4 TensorFlow Lite with REST API](https://github.com/kaka-lin/ML-Notes/tree/master/Model%20Serving/yolov4-tiny-tflite)
-
-### Edge Computing
-
-- `AIoT`
-    - [OpenVINO](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/OpenVINO)
-    - [Vitis AI](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/Vitis-AI)
-
-## Applications
-
 - [Autonomous Driving](https://github.com/kaka-lin/autonomous-driving-notes)
+
+- [Large Language Model (LLM)](https://github.com/kaka-lin/LLM-notes)
