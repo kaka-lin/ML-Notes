@@ -118,7 +118,7 @@ PR 曲線以 Recall 為 X 軸, Precision 為 Y 軸，每一個點代表設定不
 
 一般來說，Precision 與 Recall 越高，代表模型的效益越高，也就是 `PR 曲線越往右上方靠近越好`。
 
-### ROC Curve (Receiver Operator Characteristic Curve, 接收者操作特性曲線)
+### ROC Curve (Receiver Operator Characteristic Curve, 接收器工作特性曲線)
 
 ROC 曲線以 FPR (False Positive Rate) 為 X 軸, TPR (True Positive Rate) 為 Y 軸，每一個點代表設定不同的門檻值所得到的不同的 FPR 及 TPR ，最後繪製成一條曲。如下所示:
 
@@ -161,7 +161,13 @@ TPR = Sensitivity = Recall = TP / (TP + FN)
 
 ## AUC (Area under curve, 曲線下面積)
 
-AUC（Area Under Curve）代表在ROC曲線下的面積，能表示分類器預測能力的一項常用的統計值。前面提到，ROC曲線越靠近右上方越好，因此，ROC曲線下的面積越大越好，代表模型的效益越高。
+AUC（Area Under Curve）代表在ROC曲線下的面積，能表示分類器預測能力的一項常用的統計值。前面提到，ROC曲線越靠近左上方越好，因此，ROC曲線下的面積越大越好，代表模型的效益越高。
+
+- AUC = 1: 是完美分類器。絕大多數預測的場合，不存在完美分類器。
+- 0.5 < AUC < 1: 優於隨機猜測。這個分類器妥善設定閾值的話，能有預測價值。
+- AUC = 0.5: 跟隨機猜測一樣（例：丟銅板），模型沒有預測價值。
+- AUC < 0.5: 比隨機猜測還差；但只要進行反預測，就優於隨機猜測。
+
 
 ## Reference
 

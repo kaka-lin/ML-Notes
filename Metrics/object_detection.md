@@ -89,18 +89,23 @@ Recall = TP / (TP + FN) = 4 / 4 = 1
 
 ## F1-score (F1-Mesure)
 
-他是`F-score`的一個特例，當`beta=1`時就是`F1-score`。
+> 他是`F-score`的一個特例，當`beta=1`時就是`F1-score`。
 
-`F1-score`最理想的數值是`趨近於1`，就是讓precision和recall都有很高的值。
+`F1-score 是 recall 和 precision 的 加權調和平均數`，顧名思義就是為了調和 recall 和 precision 之間增減反向的矛盾，對 recall 和 precision 進行加權調和，公式如下:
 
 ```
 F1-score = 2 * ((Precision * Recall) / (Precision + Recall))
 ```
 
-$$ F1 = 2 * \frac{Precision * Recall}{Precision + Recall}$$
+$$
+\begin{aligned}
+F1-score
+& = 2 * \frac{Precision * Recall}{Precision + Recall} \\
+& = \frac{2TP}{2TP + FN + FP}
+\end{aligned}
+$$
 
-
-假設兩者皆為1，則`F1-score = 1 (100%)`，代表該演算法有著最佳的精確度
+`F1-score`最理想的數值是`趨近於1`，就是讓 precision 和 recall 都有很高的值。假設 Precision 與 Recall 皆為1，則`F1-score = 1 (100%)`，代表該演算法有著最佳的精確度
 
 ## Intersection over Union (IoU)
 

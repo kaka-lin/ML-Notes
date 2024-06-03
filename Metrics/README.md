@@ -15,9 +15,19 @@
   - AUC
 
 - [Object Detection Metrics](object_detection.md)
-  - Precision
-  - Recall
+  - Confuion Matrix
+  - Precision and Recall
   - F1-score
   - IoU
+  - PR curve
   - Average Precision (AP)
   - Mean Average Precision (mAP)
+
+- [Segmentation Metrics](segmentation.md)
+  - Confuion Matrix
+  - Accuracy, Precision, and Recall
+    - Pixel Accuracy (PA)
+    - Class Pixel Accuracy (CPA)
+    - Mean Pixel Accuracy (MPA)
+  - IoU, MIoU
+  - Dice coefficient
