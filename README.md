@@ -53,12 +53,11 @@ Machine Learning learning notes.
 - [Gradio](https://www.gradio.app/)
   - [Audio Recognition App](https://github.com/kaka-lin/audio-recognition-app)
   - [EfficientSAM Tensorflow Demo App](https://github.com/kaka-lin/EfficientSAM-tf2-demo)
-#### 2. Edge Computing
+  -
+#### 2. Edge AI (ML/AI SDK)
 
-- `Mobile`
+  - [Tensorflow Lite](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/Tensorflow%20Lite)
   - [MediaPipe](https://github.com/kaka-lin/mediapipe-notes)
-
-- `AIoT`
   - [OpenVINO](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/OpenVINO)
   - [Vitis AI](https://github.com/kaka-lin/ML-Notes/tree/master/AIoT/Vitis-AI)
 
