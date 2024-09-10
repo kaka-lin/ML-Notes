@@ -19,13 +19,6 @@ $ torchrun \
     your_training_script.py
 ```
 
-torchrun \
-    --rdzv-backend=c10d \
-    --rdzv-endpoint=localhost:0 \
-    --nnodes=1 \
-    --nproc_per_node=3 \
-    test2.py
-
 另一個寫法：
 
 ```bash
