@@ -8,6 +8,7 @@ import torch.multiprocessing as mp
 import torch.distributed as dist
 import torch.nn.functional as F
 
+
 class MyModel(nn.Module):
     def __init__(self):
         super(MyModel, self).__init__()
