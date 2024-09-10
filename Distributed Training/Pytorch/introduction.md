@@ -1,4 +1,4 @@
-# Distributed Training (分散式訓練) - Pytorch
+# The Introduction of PyTorch Distributed Training
 
 PyTorch 的分散式訓練（Distributed Training）可以讓你在多個設備（例如多塊 GPU）甚至多個節點（多台機器）上訓練深度學習模型。這種方式可以加速訓練過程，尤其在處理大型數據集或模型時，能顯著減少訓練時間。
 
