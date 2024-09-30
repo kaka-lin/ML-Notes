@@ -105,5 +105,5 @@ if __name__ == '__main__':
     axes[1, 2].imshow(img_combined)
     axes[1, 2].axis("off")
     fig.tight_layout()
-    fig.savefig('image/affine_transformation.png')
+    fig.savefig('image/example_affined.png')
     plt.show()

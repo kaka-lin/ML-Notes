@@ -4,7 +4,7 @@
 
 Affine transformation 是一種常見的幾何變換技術，它將影像中的像素通過`線性變換映射到新的位置`。仿射變換可以對影像進行`平移、旋轉、縮放、剪切`等操作，並且`保留了影像的直線性和平行性`，即變換後直線依然是直線，平行線依然平行。如下所示:
 
-![](image/affine_transformation.png)
+![](image/example_affined.png)
 
 
 Affine transformation 通常用在*校正幾何失真(geometric distortions)或是變形(deformations)上*。
@@ -28,9 +28,7 @@ General affine transformation 公式，以 (x1, y1) 為原本的位置，(x2, y2
 
 $$
 \begin{bmatrix}
-x' \\
-y' \\
-1
+x' \\ y' \\ 1
 \end{bmatrix}
 =
 \begin{bmatrix}
@@ -39,9 +37,7 @@ c & d & t_y \\
 0 & 0 & 1
 \end{bmatrix}
 \begin{bmatrix}
-x \\
-y \\
-1
+x \\ y \\ 1
 \end{bmatrix}
 $$
 
