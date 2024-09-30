@@ -37,7 +37,6 @@ Data Augmentation 是訓練模型中常見的方法，用來解決資料不足�
 - Translation
 - Noise injection
 
-
 #### Photometric transformations
 
 - Kernel filters
@@ -51,7 +50,9 @@ Data Augmentation 是訓練模型中常見的方法，用來解決資料不足�
 
 - Feature space augmentation
 
-        在 Laten Space 操作。
+    ```
+    在 Laten Space 操作。
+    ```
 
 - Adversarial training
 - GAN-based Data Augmentation
