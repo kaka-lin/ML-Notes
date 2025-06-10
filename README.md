@@ -74,3 +74,5 @@ Machine Learning learning notes.
 - [Autonomous Driving](https://github.com/kaka-lin/autonomous-driving-notes)
 
 - [Large Language Model (LLM)](https://github.com/kaka-lin/LLM-notes)
+
+- [Automatic Speech Recognition (ASR)](https://github.com/kaka-lin/ASR-notes)
